@@ -9,14 +9,14 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.activity_favorites.*
+import kotlinx.android.synthetic.main.app_bar_favorites.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class FavoritesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_favorites)
         setSupportActionBar(toolbar)
 
 
@@ -38,25 +38,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
+        menuInflater.inflate(R.menu.favorites, menu)
         return true
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        when (item.itemId) {
-//            R.id.action_settings -> return true
-//            else -> return super.onOptionsItemSelected(item)
-//        }
-//    }
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_translater -> {
-                // Handle the camera action
+                startActivity(Intent(applicationContext, MainActivity::class.java))
             }
             R.id.nav_history -> {
                 startActivity(Intent(applicationContext, HistoryActivity::class.java))
@@ -64,6 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_favorites -> {
 
             }
+
 
         }
 

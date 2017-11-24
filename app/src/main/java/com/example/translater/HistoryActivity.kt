@@ -9,16 +9,15 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.activity_history.*
+import kotlinx.android.synthetic.main.app_bar_history.*
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_history)
         setSupportActionBar(toolbar)
-
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
+        menuInflater.inflate(R.menu.history, menu)
         return true
     }
 
@@ -56,10 +55,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_translater -> {
-                // Handle the camera action
+                startActivity(Intent(applicationContext, MainActivity::class.java))
             }
             R.id.nav_history -> {
-                startActivity(Intent(applicationContext, HistoryActivity::class.java))
+
             }
             R.id.nav_favorites -> {
 
