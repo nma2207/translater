@@ -61,7 +61,7 @@ class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
             }
             R.id.nav_favorites -> {
-
+                startActivity(Intent(applicationContext, FavoritesActivity::class.java))
             }
 
         }

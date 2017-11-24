@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(applicationContext, HistoryActivity::class.java))
             }
             R.id.nav_favorites -> {
-
+                startActivity(Intent(applicationContext, FavoritesActivity::class.java))
             }
 
         }
