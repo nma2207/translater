@@ -7,7 +7,7 @@
         <item
             android:id="@+id/nav_translater"
 
-            android:title="Transater" />
+            android:title="Translater" />
         <item
             android:id="@+id/nav_history"
 

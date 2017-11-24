@@ -11,9 +11,14 @@ import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.content_main.*
+import model.history.History
+import presenter.Presenter
+import presenter.PresenterImpl
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(),View, NavigationView.OnNavigationItemSelectedListener {
 
+    var presenter: Presenter?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,6 +31,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+        presenter = PresenterImpl()
+        presenter!!.attachView(this, applicationContext)
+        translateButton.setOnClickListener {
+            sendToGetTranslate(inputBox.text.toString(), "en-ru")
+            outputBox.text = getHistory().get(0).text
+//            val key = "trnsl.1.1.20171016T111419Z.fc55cd5c198738d8.3c01307e69f137c8b02570ba469a2dd01d6740b3"
+//              utputBox.text =outputBox.text.toString()+ e.message+" error"
+//            }
+
+        }
+
     }
 
     override fun onBackPressed() {
@@ -33,6 +49,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             drawer_layout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
+
         }
     }
 
@@ -69,5 +86,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+    override fun sendToGetTranslate(text: String, lang: String) {
+        presenter!!.sendToTranslate(text,lang)
+    }
+
+    override fun getHistory(): List<History> {
+        return presenter!!.getHistory()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter!!.dettachView()
     }
 }

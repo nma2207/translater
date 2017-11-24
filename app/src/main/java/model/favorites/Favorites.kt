@@ -25,5 +25,5 @@ class Favorites(
     @Delete
     fun delete(f: Favorites)
     @Query("SELECT * FROM favorites")
-    fun getAllHistory() : Flowable<List<Favorites>>
+    fun getAllHistory() : List<Favorites>
 }
