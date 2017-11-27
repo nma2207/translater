@@ -11,9 +11,12 @@ import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_history.*
 import kotlinx.android.synthetic.main.app_bar_history.*
+import model.history.History
+import presenter.HistoryPresenter
+import presenter.HistoryPresenterImpl
+class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, HistoryView {
 
-class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
+    var presenter:HistoryPresenter?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
@@ -25,6 +28,9 @@ class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+        presenter = HistoryPresenterImpl()
+        presenter!!.attachView(this, applicationContext)
+
     }
 
     override fun onBackPressed() {
@@ -41,15 +47,6 @@ class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         return true
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        when (item.itemId) {
-//            R.id.action_settings -> return true
-//            else -> return super.onOptionsItemSelected(item)
-//        }
-//    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
@@ -68,5 +65,17 @@ class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun getHistory() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setHistory(list: List<History>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun deleteHistory(history: History) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

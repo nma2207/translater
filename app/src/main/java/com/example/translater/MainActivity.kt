@@ -13,12 +13,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import model.history.History
-import presenter.Presenter
-import presenter.PresenterImpl
+import presenter.MainPresenter
+import presenter.MainPresenterImpl
 
-class MainActivity : AppCompatActivity(),View, NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationItemSelectedListener {
 
-    var presenter: Presenter?=null
+    var presenter: MainPresenter?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,11 +31,11 @@ class MainActivity : AppCompatActivity(),View, NavigationView.OnNavigationItemSe
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
-        presenter = PresenterImpl()
+        presenter = MainPresenterImpl()
         presenter!!.attachView(this, applicationContext)
         translateButton.setOnClickListener {
             sendToGetTranslate(inputBox.text.toString(), "en-ru")
-            outputBox.text = getHistory().get(0).text
+
 //            val key = "trnsl.1.1.20171016T111419Z.fc55cd5c198738d8.3c01307e69f137c8b02570ba469a2dd01d6740b3"
 //              utputBox.text =outputBox.text.toString()+ e.message+" error"
 //            }
@@ -59,15 +59,6 @@ class MainActivity : AppCompatActivity(),View, NavigationView.OnNavigationItemSe
         return true
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        when (item.itemId) {
-//            R.id.action_settings -> return true
-//            else -> return super.onOptionsItemSelected(item)
-//        }
-//    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
@@ -91,9 +82,10 @@ class MainActivity : AppCompatActivity(),View, NavigationView.OnNavigationItemSe
         presenter!!.sendToTranslate(text,lang)
     }
 
-    override fun getHistory(): List<History> {
-        return presenter!!.getHistory()
+    override fun setTranslated(s: String) {
+        outputBox.text = s
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

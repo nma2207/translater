@@ -5,8 +5,8 @@ import model.history.History
 /**
  * Created by Марат on 2017-11-12.
  */
-interface View {
+interface MainView {
 
     fun sendToGetTranslate(text:String, lang:String)
-    fun getHistory():List<History>
+    fun setTranslated(s:String)
 }

@@ -6,27 +6,22 @@ package presenter
 
 //import javax.inject.Inject
 import android.content.Context
-import com.example.translater.View
+import com.example.translater.MainView
 import model.history.History
 import model.Model
-import model.ModelIml
-class PresenterImpl:Presenter  {
+import model.ModelImpl
+class MainPresenterImpl:MainPresenter  {
     //    val yaApiService by lazy {
 //        YandexTranslateApiService.create()
 //    }
-    var view : View?=null
+    var view : MainView?=null
     var model:Model?=null
-    override fun attachView(v:View, context: Context){
+    override fun attachView(v:MainView, context: Context){
         view = v
-        model = ModelIml(context)
+        model = ModelImpl.getInstance(context)
 
     }
-    override fun dettachView(){
-        view = null
-    }
 
-    override fun sendToGetLangList() {
-    }
 
 
 
@@ -47,9 +42,19 @@ class PresenterImpl:Presenter  {
 
     }
 
-    override fun getHistory(): List<History> {
-        return model!!.getAllHistory()
+    override fun getLangs(): List<String> {
+        return listOf("lang");
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    override fun getTranslated(): String {
+        return "Trans";
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun dettachView() {
+        view=null;
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 }

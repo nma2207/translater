@@ -16,12 +16,12 @@ interface Model {
     fun getAllHistory():List<History>
 }
 
-class ModelIml:Model{
-    var dataBase:DataBase?=null
-    constructor(context: Context){
-        dataBase=Room.databaseBuilder(context, DataBase::class.java, "my_db").build()
+class ModelImpl:Model{
 
-    }
+
+
+
+
 
     override fun addHistory(text: String, lang: String, translated: String) {
         val hist = History(0,text,lang,translated)
@@ -32,8 +32,25 @@ class ModelIml:Model{
         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+
     override fun getAllHistory(): List<History> {
         return listOf(History(0,"land","ad","sd"))
 
     }
+    private constructor(context: Context){
+        if (dataBase==null)
+            dataBase=Room.databaseBuilder(context, DataBase::class.java, "my_db").build()
+    }
+    companion object {
+        @Volatile private var instance:ModelImpl?=null
+        var dataBase:DataBase?=null
+        fun getInstance(context:Context):ModelImpl?{
+            if(instance==null)
+                instance=ModelImpl(context)
+            return instance
+        }
+
+
+    }
+
 }
