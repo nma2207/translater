@@ -48,13 +48,16 @@ class MainPresenterImpl:MainPresenter  {
         val key = "trnsl.1.1.20171016T111419Z.fc55cd5c198738d8.3c01307e69f137c8b02570ba469a2dd01d6740b3"
         val format = "plain"
 
-        try{
-            val res = translator.translate(text, Language.ENGLISH)
-            setTranslated(res)
-        }
-        catch (e:Exception){
-            setTranslated(e.toString())
-        }
+        val thread= Thread(Runnable {
+
+            try {
+                val res = translator.translate(text, Language.RUSSIAN)
+                setTranslated(res)
+            } catch (e: Exception) {
+                setTranslated(e.toString())
+            }
+        })
+        thread.start()
 
 
         //yaApiService.getTranslate(key, lang, format, text)
