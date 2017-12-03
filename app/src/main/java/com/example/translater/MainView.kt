@@ -9,4 +9,6 @@ interface MainView {
 
     fun sendToGetTranslate(text:String, lang:String)
     fun setTranslated(s:String)
+    fun getLangs()
+    fun setLangs(list:List<String>)
 }

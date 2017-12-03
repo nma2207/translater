@@ -9,8 +9,9 @@ import model.history.History
  */
 interface MainPresenter {
     fun sendToTranslate(text:String, lang:String)
-    fun getTranslated():String
-    fun getLangs():List<String>
+    fun setTranslated(word:String)
+    fun getLangs()
+    fun setLangs(list:List<String>)
 //    fun sendToGetLangList()
 //    fun getHistory():List<History>
     fun attachView(v:MainView, context: Context)

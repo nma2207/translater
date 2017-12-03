@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -18,7 +19,7 @@ import presenter.MainPresenterImpl
 
 class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationItemSelectedListener {
 
-    var presenter: MainPresenter?=null
+    var presenter: MainPresenter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,13 +35,15 @@ class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationIt
         presenter = MainPresenterImpl()
         presenter!!.attachView(this, applicationContext)
         translateButton.setOnClickListener {
-            sendToGetTranslate(inputBox.text.toString(), "en-ru")
+            val lang = langSpinner.selectedItem as String
+            sendToGetTranslate(inputBox.text.toString(), lang)
 
 //            val key = "trnsl.1.1.20171016T111419Z.fc55cd5c198738d8.3c01307e69f137c8b02570ba469a2dd01d6740b3"
 //              utputBox.text =outputBox.text.toString()+ e.message+" error"
 //            }
 
         }
+        getLangs()
 
     }
 
@@ -78,8 +81,9 @@ class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationIt
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
+
     override fun sendToGetTranslate(text: String, lang: String) {
-        presenter!!.sendToTranslate(text,lang)
+        presenter!!.sendToTranslate(text, lang)
     }
 
     override fun setTranslated(s: String) {
@@ -90,5 +94,17 @@ class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationIt
     override fun onDestroy() {
         super.onDestroy()
         presenter!!.dettachView()
+    }
+
+    override fun getLangs() {
+        presenter!!.getLangs()
+    }
+
+    override fun setLangs(list: List<String>) {
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Применяем адаптер к элементу spinner
+        langSpinner.setAdapter(adapter);
+
     }
 }
