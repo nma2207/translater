@@ -11,9 +11,13 @@ import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_favorites.*
 import kotlinx.android.synthetic.main.app_bar_favorites.*
+import model.favorites.Favorites
+import presenter.FavoritePresenter
+import presenter.FavirotesPresenterImpl
 
-class FavoritesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+class FavoritesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener ,FavoritesView{
+    var presenter: FavoritePresenter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
@@ -24,7 +28,8 @@ class FavoritesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-
+        presenter = FavirotesPresenterImpl()
+        presenter!!.attachView(this, this)
         nav_view.setNavigationItemSelectedListener(this)
     }
 
@@ -62,5 +67,17 @@ class FavoritesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun deleteAllFavorites() {
+        presenter!!.deleteAllFavorite()
+    }
+
+    override fun getAllFavorites() {
+        presenter!!.getAllFavorites()
+    }
+
+    override fun setFavorites(list: List<Favorites>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

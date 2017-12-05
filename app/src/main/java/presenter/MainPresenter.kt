@@ -12,9 +12,10 @@ interface MainPresenter {
     fun sendToTranslate(text:String, langFrom:String, langTo:String)
     fun setTranslated(word:String)
     fun getLangs()
-    fun setLangs(list:List<Language>)
+    fun setLangs(list:List<String>)
 //    fun sendToGetLangList()
 //    fun getHistory():List<History>
     fun attachView(v:MainView, context: Context)
     fun dettachView()
+    fun addFavorites(text:String, langFrom:String, langTo:String)
 }

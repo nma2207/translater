@@ -10,10 +10,18 @@ import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import model.favorites.Favorites
 
 interface Model {
-    fun addHistory(text:String, lang:String, translated:String)
+    //History
+    fun addHistory(text:String, langFrom:String,langTo:String, translated:String)
     fun getAllHistory():List<History>
+    fun deleteAllHistory()
+    //Favorites
+    fun addFavorites(text:String, langFrom:String,langTo:String, translated:String)
+    fun getAllFavorites():List<Favorites>
+    fun deleteAllFavorites()
+
 }
 
 class ModelImpl:Model{
@@ -23,8 +31,8 @@ class ModelImpl:Model{
 
 
 
-    override fun addHistory(text: String, lang: String, translated: String) {
-        val hist = History(0,text,lang,translated)
+    override fun addHistory(text: String, langFrom: String,langTo:String, translated: String) {
+        val hist = History(0,text,langFrom,langTo,translated)
         Single.fromCallable {
             dataBase?.getHistoryDao()?.insert(hist)
         }.subscribeOn(Schedulers.io())
@@ -34,7 +42,29 @@ class ModelImpl:Model{
 
 
     override fun getAllHistory(): List<History> {
-        return listOf(History(0,"land","ad","sd"))
+        return dataBase?.getHistoryDao()?.getAllHistory()!!
+
+    }
+
+    override fun deleteAllHistory() {
+        val hists = getAllHistory()
+        for (h:History in  hists)
+            dataBase?.getHistoryDao()?.delete(h)
+    }
+
+    override fun addFavorites(text: String, langFrom: String, langTo: String, translated: String) {
+        val fav = Favorites(0,text,langFrom,langTo,translated)
+        Single.fromCallable {
+            dataBase?.getFavoritesDao()?.insert(fav)
+        }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe()
+    }
+
+    override fun getAllFavorites(): List<Favorites> {
+        return dataBase?.getFavoritesDao()?.getAllFavorites()!!
+    }
+
+    override fun deleteAllFavorites() {
 
     }
     private constructor(context: Context){

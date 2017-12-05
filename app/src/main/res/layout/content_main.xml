@@ -13,12 +13,12 @@
         android:layout_width="154dp"
         android:layout_height="55dp"
         android:layout_marginBottom="48dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="translate"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/outputBox" />
 
     <EditText
         android:id="@+id/inputBox"
@@ -49,11 +49,11 @@
         android:id="@+id/outputBox"
         android:layout_width="337dp"
         android:layout_height="136dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="148dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/translateButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.741"
         app:layout_constraintStart_toStartOf="parent" />
@@ -70,5 +70,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fromLangSpinner" />
+
+    <Button
+        android:id="@+id/addFavoritesButton"
+        android:layout_width="190dp"
+        android:layout_height="58dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Add to favorites"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.118"
+        app:layout_constraintStart_toEndOf="@+id/translateButton"
+        app:layout_constraintTop_toBottomOf="@+id/outputBox"
+        app:layout_constraintVertical_bias="0.246" />
 
 </android.support.constraint.ConstraintLayout>

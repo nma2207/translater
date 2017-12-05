@@ -11,7 +11,8 @@ class History(
         @PrimaryKey(autoGenerate = true)
         val id:Int,
         val text: String = "",
-        val lang: String  =  "",
+        val langFrom: String  =  "",
+        val langTo: String  =  "",
         val translated:String = ""
 )
 

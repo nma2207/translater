@@ -8,5 +8,5 @@ import model.favorites.Favorites
 interface FavoritesView{
     fun getAllFavorites()
     fun setFavorites(list:List<Favorites>)
-    fun deleteFavorites(favorites: Favorites)
+    fun deleteAllFavorites()
 }

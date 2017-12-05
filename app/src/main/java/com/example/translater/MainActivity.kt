@@ -43,6 +43,11 @@ class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationIt
 //            }
 
         }
+        addFavoritesButton.setOnClickListener {
+            val langFrom = fromLangSpinner.selectedItem as String
+            val langTo = toLangSpinner.selectedItem as String
+            addFavorites(inputBox.text.toString(), langFrom, langTo)
+        }
         getLangs()
 
     }
@@ -100,18 +105,22 @@ class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationIt
         presenter!!.getLangs()
     }
 
-    override fun setLangs(list: List<Language>) {
-        val adapter1 = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list.map{it.toString()})
+    override fun setLangs(list: List<String>) {
+        val adapter1 = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list)
 
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Применяем адаптер к элементу spinner
         fromLangSpinner.setAdapter(adapter1);
 
-        val adapter2 = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list.map{it.toString()})
+        val adapter2 = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list)
 
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Применяем адаптер к элементу spinner
         toLangSpinner.setAdapter(adapter2);
 
+    }
+
+    override fun addFavorites(text: String, langFrom: String, langTo: String) {
+        presenter!!.addFavorites(text,langFrom, langTo)
     }
 }

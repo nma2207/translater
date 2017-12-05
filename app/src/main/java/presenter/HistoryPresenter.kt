@@ -9,7 +9,7 @@ import com.example.translater.HistoryView
 interface HistoryPresenter {
     fun getAllHistory()
     fun setHistory(list:List<History>)
-    fun deleteHistory(history:History)
+    fun deleteAllHistory()
     fun attachView(v:HistoryView, context: Context)
     fun dettachView()
 

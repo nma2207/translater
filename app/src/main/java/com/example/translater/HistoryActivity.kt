@@ -68,14 +68,14 @@ class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     override fun getHistory() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        presenter!!.getAllHistory()
     }
 
     override fun setHistory(list: List<History>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
-    override fun deleteHistory(history: History) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun deleteAllHistory() {
+        presenter!!.deleteAllHistory()
     }
 }

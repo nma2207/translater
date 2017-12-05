@@ -22,10 +22,7 @@ import com.unikre.yandex.params.Language
 
 
 class MainPresenterImpl:MainPresenter  {
-    //    val yaApiService by lazy {
-//        YandexTranslateApiService.create()
-//    }
-    var disposable: Disposable? = null
+
     var view : MainView?=null
     var model:Model?=null
     var context:Context?=null
@@ -45,49 +42,48 @@ class MainPresenterImpl:MainPresenter  {
 
     override fun sendToTranslate(text: String, langFrom: String, langTo:String) {
 
-        val key = "trnsl.1.1.20171016T111419Z.fc55cd5c198738d8.3c01307e69f137c8b02570ba469a2dd01d6740b3"
-        val format = "plain"
-
+        var res=text
         val thread= Thread(Runnable {
 
             try {
                 val from=Language.byCode(langFrom)
                 val to = Language.byCode(langTo)
-                val res = translator.translate(text, from, to)
+                res = translator.translate(text, from, to)
+                model!!.addHistory(text,langFrom,langTo,res)
                 setTranslated(res)
             } catch (e: Exception) {
                 setTranslated(e.toString())
             }
         })
         thread.start()
+        thread.join()
+        model!!.addHistory(text,langFrom,langTo,res)
 
-
-        //yaApiService.getTranslate(key, lang, format, text)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribeOn(
-//                        { result -> txt_search_result.text = "${result.query.searchinfo.totalhits} result found" },
-//                        { error -> Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show() }
-//                )
 
     }
 
     override fun getLangs(){
+        //val langs = listOf<String>(af, am, ar, az, ba, be, bg, bn, bs, ca, ceb, cs, cy, da, de, el, en, eo, es, et, eu, fa, fi, fr, ga, gd, gl, gu, he, hi, hr, ht, hu, hy, id, is, it, ja, jv, ka, kk, km, kn, ko, ky, la, lb, lo, lt, lv, mg, mhr, mi, mk, ml, mn, mr, mrj, ms, mt, my, ne, nl, no, pa, pap, pl, pt, ro, ru, si, sk, sl, sq, sr, su, sv, sw, ta, te, tg, th, tl, tr, tt, udm, uk, ur, uz, vi, xh, yi, zh])
+        var res = listOf<String>()
         val thread= Thread(Runnable {
-
             try {
-                val res = translator.getSupportedLanguages()
-                setLangs(res)
+
+                res = translator.getSupportedLanguages().map{it.toString()}
+
 
             } catch (e: Exception) {
-                setLangs(listOf(Language.RUSSIAN, Language.ENGLISH))
+                res=listOf("ru", "en")
             }
         })
         thread.start()
-        //setLangs(listOf(Language.RUSSIAN, Language.ENGLISH))
+
+        thread.join()
+        setLangs(res)
+
     }
 
-    override fun setLangs(list: List<Language>) {
+    override fun setLangs(list: List<String>) {
+
         view!!.setLangs(list)
     }
 
@@ -102,12 +98,25 @@ class MainPresenterImpl:MainPresenter  {
 
     }
 
-//    private fun beginSearch(key:String, text:String, lang:String, format:String):String {
-//        val translatorBackgroundTask = TranslatorBackgroundTask(context!!)
-//        val translationResult = translatorBackgroundTask.execute(text, lang) // Returns the translated text as a String
-//        //Log.d("Translation Result", translationResult)
-//        return "otvet"
-//
-//    }
+    override fun addFavorites(text: String, langFrom: String, langTo: String) {
+        var res=text
+        val thread= Thread(Runnable {
+
+            try {
+                val from=Language.byCode(langFrom)
+                val to = Language.byCode(langTo)
+                res = translator.translate(text, from, to)
+                model!!.addHistory(text,langFrom,langTo,res)
+                setTranslated(res)
+            } catch (e: Exception) {
+                setTranslated(e.toString())
+            }
+        })
+        model!!.addFavorites(text,langFrom,langTo,res)
+        thread.start()
+        thread.join()
+    }
+
+
 
 }

@@ -11,5 +11,6 @@ interface MainView {
     fun sendToGetTranslate(text:String, langFrom:String, langTo:String)
     fun setTranslated(s:String)
     fun getLangs()
-    fun setLangs(list:List<Language>)
+    fun setLangs(list:List<String>)
+    fun addFavorites(text:String, langFrom:String, langTo:String)
 }

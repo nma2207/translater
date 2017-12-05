@@ -8,6 +8,6 @@ import model.history.History
 interface HistoryView {
     fun getHistory()
     fun setHistory(list:List<History>)
-    fun deleteHistory(history: History)
+    fun deleteAllHistory()
 
 }

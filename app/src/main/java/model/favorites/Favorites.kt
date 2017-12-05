@@ -14,7 +14,8 @@ class Favorites(
         @PrimaryKey(autoGenerate = true)
         val id:Int,
         val text: String = "",
-        val lang: String  =  "",
+        val langFrom: String  =  "",
+        val langTo: String  =  "",
         val translated:String = ""
 )
 
@@ -25,5 +26,5 @@ class Favorites(
     @Delete
     fun delete(f: Favorites)
     @Query("SELECT * FROM favorites")
-    fun getAllHistory() : List<Favorites>
+    fun getAllFavorites() : List<Favorites>
 }
