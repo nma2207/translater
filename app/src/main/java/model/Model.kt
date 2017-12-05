@@ -37,7 +37,6 @@ class ModelImpl:Model{
             dataBase?.getHistoryDao()?.insert(hist)
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe()
-        //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 
@@ -47,9 +46,9 @@ class ModelImpl:Model{
     }
 
     override fun deleteAllHistory() {
-        val hists = getAllHistory()
-        for (h:History in  hists)
-            dataBase?.getHistoryDao()?.delete(h)
+        val hist = getAllHistory()
+        dataBase!!.getHistoryDao()!!.deleteAll(hist)
+
     }
 
     override fun addFavorites(text: String, langFrom: String, langTo: String, translated: String) {
@@ -65,6 +64,8 @@ class ModelImpl:Model{
     }
 
     override fun deleteAllFavorites() {
+        val favorites = getAllFavorites()
+        dataBase!!.getFavoritesDao()!!.deleteAll(favorites)
 
     }
     private constructor(context: Context){

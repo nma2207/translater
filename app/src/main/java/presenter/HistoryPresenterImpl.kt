@@ -4,6 +4,8 @@ import android.content.Context
 import com.example.translater.HistoryView
 import model.Model
 import model.history.History
+import model.ModelImpl
+import kotlin.concurrent.thread
 
 /**
  * Created by Марат on 2017-11-27.
@@ -15,7 +17,12 @@ class HistoryPresenterImpl:HistoryPresenter{
 
 
     override fun getAllHistory() {
-       val histList = model!!.getAllHistory()
+        var histList=listOf<History>()
+        val thread = Thread({
+            histList= model!!.getAllHistory()
+        })
+        thread.start()
+        thread.join()
         setHistory(histList)
     }
 
@@ -24,10 +31,15 @@ class HistoryPresenterImpl:HistoryPresenter{
     }
 
     override fun deleteAllHistory() {
-        model!!.deleteAllHistory()
+        val thread = Thread({
+            model!!.deleteAllHistory()
+        })
+        thread.start()
+        thread.join()
     }
     override fun attachView(v: HistoryView, context: Context) {
         view=v
+        model=ModelImpl.getInstance(context)
         this.context=context
     }
 

@@ -27,4 +27,7 @@ class Favorites(
     fun delete(f: Favorites)
     @Query("SELECT * FROM favorites")
     fun getAllFavorites() : List<Favorites>
+
+    @Delete
+    fun deleteAll(list: List<Favorites>)
 }

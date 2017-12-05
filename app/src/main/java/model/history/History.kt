@@ -23,5 +23,9 @@ class History(
     fun delete(h:History)
     @Query("SELECT * FROM history")
     fun getAllHistory() : List<History>
+    @Delete
+    fun deleteAll(list: List<History>)
+    @Query("DELETE FROM history")
+    fun clearTable()
 
 }

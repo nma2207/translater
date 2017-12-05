@@ -9,8 +9,10 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_favorites.*
 import kotlinx.android.synthetic.main.app_bar_favorites.*
+import kotlinx.android.synthetic.main.content_history.*
 import model.favorites.Favorites
 import presenter.FavoritePresenter
 import presenter.FavirotesPresenterImpl
@@ -18,6 +20,7 @@ import presenter.FavirotesPresenterImpl
 
 class FavoritesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener ,FavoritesView{
     var presenter: FavoritePresenter? = null
+    val header = listOf("word","from","to","translate")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
@@ -31,6 +34,11 @@ class FavoritesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         presenter = FavirotesPresenterImpl()
         presenter!!.attachView(this, this)
         nav_view.setNavigationItemSelectedListener(this)
+        clearButton.text="Clear all favorites"
+        clearButton.setOnClickListener {
+            deleteAllFavorites()
+        }
+        getAllFavorites()
     }
 
     override fun onBackPressed() {
@@ -69,15 +77,31 @@ class FavoritesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         return true
     }
 
-    override fun deleteAllFavorites() {
-        presenter!!.deleteAllFavorite()
-    }
-
     override fun getAllFavorites() {
         presenter!!.getAllFavorites()
     }
 
+
+
+
     override fun setFavorites(list: List<Favorites>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        setToTable(list)
+    }
+    override fun deleteAllFavorites() {
+        presenter!!.deleteAllFavorite()
+        setToTable(listOf<Favorites>())
+    }
+    fun setToTable(list:List<Favorites>)
+    {
+        val resList = mutableListOf<String>()
+        resList.addAll(header)
+        for (h in list){
+            resList.add(h.text)
+            resList.add(h.langFrom)
+            resList.add(h.langTo)
+            resList.add(h.translated)
+        }
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, resList)
+        table.adapter=adapter
     }
 }

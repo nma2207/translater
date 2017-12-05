@@ -9,14 +9,18 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.activity_history.*
 import kotlinx.android.synthetic.main.app_bar_history.*
+import kotlinx.android.synthetic.main.content_history.*
 import model.history.History
 import presenter.HistoryPresenter
 import presenter.HistoryPresenterImpl
 class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, HistoryView {
 
     var presenter:HistoryPresenter?=null
+    val header = listOf("word","from","to","translate")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
@@ -28,8 +32,14 @@ class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        clearButton.text="Clear all history"
+        clearButton.setOnClickListener {
+            deleteAllHistory()
+        }
         presenter = HistoryPresenterImpl()
         presenter!!.attachView(this, applicationContext)
+        getHistory()
 
     }
 
@@ -72,10 +82,24 @@ class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     override fun setHistory(list: List<History>) {
-
+        setToTable(list)
     }
 
     override fun deleteAllHistory() {
         presenter!!.deleteAllHistory()
+        setToTable(listOf<History>())
+    }
+    fun setToTable(list:List<History>)
+    {
+        val resList = mutableListOf<String>()
+        resList.addAll(header)
+        for (h in list){
+            resList.add(h.text)
+            resList.add(h.langFrom)
+            resList.add(h.langTo)
+            resList.add(h.translated)
+        }
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, resList)
+        table.adapter=adapter
     }
 }

@@ -49,7 +49,6 @@ class MainPresenterImpl:MainPresenter  {
                 val from=Language.byCode(langFrom)
                 val to = Language.byCode(langTo)
                 res = translator.translate(text, from, to)
-                model!!.addHistory(text,langFrom,langTo,res)
                 setTranslated(res)
             } catch (e: Exception) {
                 setTranslated(e.toString())
@@ -106,15 +105,15 @@ class MainPresenterImpl:MainPresenter  {
                 val from=Language.byCode(langFrom)
                 val to = Language.byCode(langTo)
                 res = translator.translate(text, from, to)
-                model!!.addHistory(text,langFrom,langTo,res)
                 setTranslated(res)
             } catch (e: Exception) {
                 setTranslated(e.toString())
             }
         })
-        model!!.addFavorites(text,langFrom,langTo,res)
         thread.start()
         thread.join()
+        model!!.addFavorites(text,langFrom,langTo,res)
+
     }
 
 
