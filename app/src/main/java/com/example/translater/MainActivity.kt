@@ -19,6 +19,7 @@ import presenter.MainPresenterImpl
 class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationItemSelectedListener {
 
     var presenter: MainPresenter? = null
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -38,10 +39,6 @@ class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationIt
             val langTo = toLangSpinner.selectedItem as String
             sendToGetTranslate(inputBox.text.toString(), langFrom, langTo)
 
-//            val key = "trnsl.1.1.20171016T111419Z.fc55cd5c198738d8.3c01307e69f137c8b02570ba469a2dd01d6740b3"
-//              utputBox.text =outputBox.text.toString()+ e.message+" error"
-//            }
-
         }
         addFavoritesButton.setOnClickListener {
             val langFrom = fromLangSpinner.selectedItem as String
@@ -51,7 +48,7 @@ class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationIt
         getLangs()
 
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -60,14 +57,14 @@ class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationIt
 
         }
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
 
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
@@ -86,25 +83,25 @@ class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationIt
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun sendToGetTranslate(text: String, langFrom: String, langTo:String) {
         presenter!!.sendToTranslate(text, langFrom, langTo)
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun setTranslated(s: String) {
         outputBox.text = s
     }
 
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onDestroy() {
         super.onDestroy()
         presenter!!.dettachView()
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun getLangs() {
         presenter!!.getLangs()
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun setLangs(list: List<String>) {
         val adapter1 = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list)
 
@@ -119,7 +116,7 @@ class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationIt
         toLangSpinner.setAdapter(adapter2);
 
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun addFavorites(text: String, langFrom: String, langTo: String) {
         presenter!!.addFavorites(text,langFrom, langTo)
     }

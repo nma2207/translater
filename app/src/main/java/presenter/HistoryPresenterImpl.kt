@@ -14,7 +14,7 @@ class HistoryPresenterImpl:HistoryPresenter{
     var view : HistoryView?=null
     var model: Model?=null
     var context:Context?=null
-
+////////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun getAllHistory() {
         var histList=listOf<History>()
@@ -25,11 +25,11 @@ class HistoryPresenterImpl:HistoryPresenter{
         thread.join()
         setHistory(histList)
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun setHistory(list: List<History>) {
         view!!.setHistory(list)
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun deleteAllHistory() {
         val thread = Thread({
             model!!.deleteAllHistory()
@@ -37,12 +37,13 @@ class HistoryPresenterImpl:HistoryPresenter{
         thread.start()
         thread.join()
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun attachView(v: HistoryView, context: Context) {
         view=v
         model=ModelImpl.getInstance(context)
         this.context=context
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun dettachView() {
        view=null
     }

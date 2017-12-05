@@ -25,12 +25,7 @@ interface Model {
 }
 
 class ModelImpl:Model{
-
-
-
-
-
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun addHistory(text: String, langFrom: String,langTo:String, translated: String) {
         val hist = History(0,text,langFrom,langTo,translated)
         Single.fromCallable {
@@ -38,19 +33,19 @@ class ModelImpl:Model{
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe()
     }
-
+////////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun getAllHistory(): List<History> {
         return dataBase?.getHistoryDao()?.getAllHistory()!!
 
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun deleteAllHistory() {
         val hist = getAllHistory()
         dataBase!!.getHistoryDao()!!.deleteAll(hist)
 
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun addFavorites(text: String, langFrom: String, langTo: String, translated: String) {
         val fav = Favorites(0,text,langFrom,langTo,translated)
         Single.fromCallable {
@@ -58,29 +53,32 @@ class ModelImpl:Model{
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe()
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun getAllFavorites(): List<Favorites> {
         return dataBase?.getFavoritesDao()?.getAllFavorites()!!
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun deleteAllFavorites() {
         val favorites = getAllFavorites()
         dataBase!!.getFavoritesDao()!!.deleteAll(favorites)
 
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     private constructor(context: Context){
         if (dataBase==null)
             dataBase=Room.databaseBuilder(context, DataBase::class.java, "my_db").build()
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     companion object {
         @Volatile private var instance:ModelImpl?=null
         var dataBase:DataBase?=null
+        ////////////////////////////////////////////////////////////////////////////////////////////////
         fun getInstance(context:Context):ModelImpl?{
             if(instance==null)
                 instance=ModelImpl(context)
             return instance
         }
-
+////////////////////////////////////////////////////////////////////////////////////////////////
 
     }
 

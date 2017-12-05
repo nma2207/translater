@@ -12,6 +12,7 @@ class FavirotesPresenterImpl:FavoritePresenter {
     var view : FavoritesView?=null
     var model: Model?=null
     var context:Context?=null
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun getAllFavorites() {
         var favList = listOf<Favorites>()
         val thread = Thread({
@@ -21,11 +22,11 @@ class FavirotesPresenterImpl:FavoritePresenter {
         thread.join()
         setFavorites(favList)
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun setFavorites(list: List<Favorites>) {
         view!!.setFavorites(list)
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun deleteAllFavorite() {
         val thread = Thread({
             model!!.deleteAllFavorites()
@@ -33,12 +34,13 @@ class FavirotesPresenterImpl:FavoritePresenter {
         thread.start()
         thread.join()
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun attachView(v: FavoritesView, context: Context) {
         view = v
         model = ModelImpl.getInstance(context)
         this.context=context
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun dettachView() {
         view=null
     }

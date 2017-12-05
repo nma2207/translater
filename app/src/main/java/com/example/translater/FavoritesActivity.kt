@@ -21,6 +21,7 @@ import presenter.FavirotesPresenterImpl
 class FavoritesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener ,FavoritesView{
     var presenter: FavoritePresenter? = null
     val header = listOf("word","from","to","translate")
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
@@ -35,12 +36,14 @@ class FavoritesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         presenter!!.attachView(this, this)
         nav_view.setNavigationItemSelectedListener(this)
         clearButton.text="Clear all favorites"
+        ////////////////////////////////////////////////////////////////////////////////////////////////
         clearButton.setOnClickListener {
             deleteAllFavorites()
         }
+        ////////////////////////////////////////////////////////////////////////////////////////////////
         getAllFavorites()
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -48,15 +51,13 @@ class FavoritesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             super.onBackPressed()
         }
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.favorites, menu)
         return true
     }
-
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
@@ -76,21 +77,20 @@ class FavoritesActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun getAllFavorites() {
         presenter!!.getAllFavorites()
     }
-
-
-
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun setFavorites(list: List<Favorites>) {
         setToTable(list)
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun deleteAllFavorites() {
         presenter!!.deleteAllFavorite()
         setToTable(listOf<Favorites>())
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     fun setToTable(list:List<Favorites>)
     {
         val resList = mutableListOf<String>()

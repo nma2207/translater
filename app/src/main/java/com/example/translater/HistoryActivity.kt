@@ -21,6 +21,7 @@ class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     var presenter:HistoryPresenter?=null
     val header = listOf("word","from","to","translate")
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
@@ -34,15 +35,17 @@ class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         nav_view.setNavigationItemSelectedListener(this)
 
         clearButton.text="Clear all history"
+        ////////////////////////////////////////////////////////////////////////////////////////////////
         clearButton.setOnClickListener {
             deleteAllHistory()
         }
+        ////////////////////////////////////////////////////////////////////////////////////////////////
         presenter = HistoryPresenterImpl()
         presenter!!.attachView(this, applicationContext)
         getHistory()
 
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -50,13 +53,13 @@ class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             super.onBackPressed()
         }
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.history, menu)
         return true
     }
-
+////////////////////////////////////////////////////////////////////////////////////////////////
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
@@ -76,19 +79,20 @@ class HistoryActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun getHistory() {
         presenter!!.getAllHistory()
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun setHistory(list: List<History>) {
         setToTable(list)
     }
-
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     override fun deleteAllHistory() {
         presenter!!.deleteAllHistory()
         setToTable(listOf<History>())
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     fun setToTable(list:List<History>)
     {
         val resList = mutableListOf<String>()
