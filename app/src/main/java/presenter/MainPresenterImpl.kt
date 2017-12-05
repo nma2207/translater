@@ -43,7 +43,7 @@ class MainPresenterImpl:MainPresenter  {
 
 
 
-    override fun sendToTranslate(text: String, lang: String) {
+    override fun sendToTranslate(text: String, langFrom: String, langTo:String) {
 
         val key = "trnsl.1.1.20171016T111419Z.fc55cd5c198738d8.3c01307e69f137c8b02570ba469a2dd01d6740b3"
         val format = "plain"
@@ -51,7 +51,9 @@ class MainPresenterImpl:MainPresenter  {
         val thread= Thread(Runnable {
 
             try {
-                val res = translator.translate(text, Language.RUSSIAN)
+                val from=Language.byCode(langFrom)
+                val to = Language.byCode(langTo)
+                val res = translator.translate(text, from, to)
                 setTranslated(res)
             } catch (e: Exception) {
                 setTranslated(e.toString())
@@ -71,10 +73,21 @@ class MainPresenterImpl:MainPresenter  {
     }
 
     override fun getLangs(){
-        setLangs(listOf("en", "ru"))
+        val thread= Thread(Runnable {
+
+            try {
+                val res = translator.getSupportedLanguages()
+                setLangs(res)
+
+            } catch (e: Exception) {
+                setLangs(listOf(Language.RUSSIAN, Language.ENGLISH))
+            }
+        })
+        thread.start()
+        //setLangs(listOf(Language.RUSSIAN, Language.ENGLISH))
     }
 
-    override fun setLangs(list: List<String>) {
+    override fun setLangs(list: List<Language>) {
         view!!.setLangs(list)
     }
 

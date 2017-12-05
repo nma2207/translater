@@ -2,7 +2,6 @@ package com.example.translater
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -10,10 +9,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import com.unikre.yandex.params.Language
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import model.history.History
 import presenter.MainPresenter
 import presenter.MainPresenterImpl
 
@@ -33,10 +32,11 @@ class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationIt
 
         nav_view.setNavigationItemSelectedListener(this)
         presenter = MainPresenterImpl()
-        presenter!!.attachView(this, applicationContext)
+        presenter!!.attachView(this, this)
         translateButton.setOnClickListener {
-            val lang = langSpinner.selectedItem as String
-            sendToGetTranslate(inputBox.text.toString(), lang)
+            val langFrom = fromLangSpinner.selectedItem as String
+            val langTo = toLangSpinner.selectedItem as String
+            sendToGetTranslate(inputBox.text.toString(), langFrom, langTo)
 
 //            val key = "trnsl.1.1.20171016T111419Z.fc55cd5c198738d8.3c01307e69f137c8b02570ba469a2dd01d6740b3"
 //              utputBox.text =outputBox.text.toString()+ e.message+" error"
@@ -82,8 +82,8 @@ class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationIt
         return true
     }
 
-    override fun sendToGetTranslate(text: String, lang: String) {
-        presenter!!.sendToTranslate(text, lang)
+    override fun sendToGetTranslate(text: String, langFrom: String, langTo:String) {
+        presenter!!.sendToTranslate(text, langFrom, langTo)
     }
 
     override fun setTranslated(s: String) {
@@ -100,11 +100,18 @@ class MainActivity : AppCompatActivity(),MainView, NavigationView.OnNavigationIt
         presenter!!.getLangs()
     }
 
-    override fun setLangs(list: List<String>) {
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    override fun setLangs(list: List<Language>) {
+        val adapter1 = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list.map{it.toString()})
+
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Применяем адаптер к элементу spinner
-        langSpinner.setAdapter(adapter);
+        fromLangSpinner.setAdapter(adapter1);
+
+        val adapter2 = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list.map{it.toString()})
+
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Применяем адаптер к элементу spinner
+        toLangSpinner.setAdapter(adapter2);
 
     }
 }

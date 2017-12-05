@@ -10,12 +10,12 @@
 
     <Button
         android:id="@+id/translateButton"
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="124dp"
+        android:layout_width="154dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="48dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:text="Button"
+        android:text="translate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
-        android:id="@+id/langSpinner"
+        android:id="@+id/fromLangSpinner"
         android:layout_width="315dp"
         android:layout_height="37dp"
         android:layout_marginEnd="8dp"
@@ -49,16 +49,26 @@
         android:id="@+id/outputBox"
         android:layout_width="337dp"
         android:layout_height="136dp"
+        android:layout_marginBottom="44dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/translateButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.741"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/toLangSpinner"
+        android:layout_width="325dp"
+        android:layout_height="43dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/translateButton"
+        app:layout_constraintBottom_toTopOf="@+id/outputBox"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/langSpinner"
-        app:layout_constraintVertical_bias="0.205" />
+        app:layout_constraintTop_toBottomOf="@+id/fromLangSpinner" />
 
 </android.support.constraint.ConstraintLayout>
